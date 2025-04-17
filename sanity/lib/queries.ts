@@ -15,7 +15,8 @@ export const projectsQuery = groq`*[_type == "project"] | order(publishedAt desc
   projectUrl,
   githubUrl,
   tags,
-  publishedAt
+  publishedAt,
+  isRecentUpdate
 }`
 
 export const experiencesQuery = groq`*[_type == "experience"] | order(order asc) {

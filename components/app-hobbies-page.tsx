@@ -69,11 +69,11 @@ const visitedPlaces: Place[] = [
 
 // 更新国家图片映射
 const countryImages = {
-  Japan: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=1600&h=900",  // 涩谷十字路口夜景
-  Cambodia: "https://images.unsplash.com/photo-1540525080980-b97c4aa2e284?q=80&w=1600&h=900",  // 吴哥窟正面宏伟景观
-  Philippines: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=1600&h=900", // 长滩岛
-  Thailand: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=1600&h=900", // 大皇宫
-  Malaysia: "https://images.unsplash.com/photo-1604999333679-b86d54738315?q=80&w=1600&h=900"  // 吉隆坡街景与双子塔
+  Japan: "/images/japan.jpg",  // 本地图片路径
+  Cambodia: "/__test/test.jpg",  // 测试柬埔寨图片路径
+  Philippines: "/images/philippines.jpg", // 本地图片路径
+  Thailand: "/images/thailand.jpg", // 本地图片路径
+  Malaysia: "/images/malaysia.jpg"  // 本地图片路径
 }
 
 export function AppHobbiesPage() {
@@ -83,27 +83,31 @@ export function AppHobbiesPage() {
   const games = [
     {
       name: 'League of Legends',
+      image: '/images/lol.jpg',
       hours: '1000+',
       rank: 'Diamond',
       achievements: ['5v5 Ranked', 'ARAM Master']
     },
     {
       name: 'World of Warcraft',
-      hours: '2000+',
-      rank: 'Level 70',
-      achievements: ['Raid Leader', 'PvP Veteran']
+      image: '/images/wow.jpg',
+      hours: '500+',
+      rank: 'Gladiator',
+      achievements: ['Mythic Raiding', 'Arena Master']
     },
     {
       name: 'Diablo',
-      hours: '500+',
-      rank: 'Paragon 800',
-      achievements: ['Hardcore Mode', 'Season Journey']
+      image: '/images/diablo.jpg',
+      hours: '300+',
+      rank: 'Torment XVI',
+      achievements: ['Seasonal Conquests', 'Greater Rift Pushing']
     },
     {
       name: 'Steam Games',
-      hours: '1500+',
-      rank: 'Various',
-      achievements: ['Achievement Hunter', '100+ Games']
+      image: '/images/steam.jpg',
+      hours: '2000+',
+      rank: 'Completionist',
+      achievements: ['Extensive Library', 'Achievement Hunting']
     }
   ]
 
@@ -140,6 +144,11 @@ export function AppHobbiesPage() {
     }
   ]
 
+  const handleHobbyChange = (hobby: 'gaming' | 'travel') => {
+    console.log('Setting active hobby to:', hobby);
+    setActiveHobby(hobby);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -151,13 +160,7 @@ export function AppHobbiesPage() {
         <div className="relative h-[200px] rounded-xl overflow-hidden">
           {/* 背景图片 */}
           <div className="absolute inset-0">
-            <Image
-              src="/images/hobbies-banner.jpg"
-              alt="Hobbies Banner"
-              fill
-              className="object-cover"
-              priority
-            />
+            <div className="w-full h-full bg-blue-900/30"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
           </div>
 
@@ -228,7 +231,7 @@ export function AppHobbiesPage() {
       <div className="flex gap-4 mb-8">
         <Button
           variant={activeHobby === 'gaming' ? 'default' : 'outline'}
-          onClick={() => setActiveHobby('gaming')}
+          onClick={() => handleHobbyChange('gaming')}
           className="flex items-center gap-2 px-6 py-4"
         >
           <Gamepad2 className="h-5 w-5" />
@@ -236,7 +239,7 @@ export function AppHobbiesPage() {
         </Button>
         <Button
           variant={activeHobby === 'travel' ? 'default' : 'outline'}
-          onClick={() => setActiveHobby('travel')}
+          onClick={() => handleHobbyChange('travel')}
           className="flex items-center gap-2 px-6 py-4"
         >
           <Plane className="h-5 w-5" />
@@ -265,7 +268,7 @@ export function AppHobbiesPage() {
                   <Card key={game.name} className="p-4 hover:shadow-lg transition-shadow duration-300">
                     <div className="relative aspect-video rounded-lg overflow-hidden mb-4">
                       <Image
-                        src={`https://picsum.photos/seed/${game.name.toLowerCase()}/400/225`}
+                        src={game.image}
                         alt={game.name}
                         fill
                         className="object-cover transition-transform duration-300 hover:scale-110"
@@ -389,12 +392,14 @@ export function AppHobbiesPage() {
                 {travelSpots.map((spot) => (
                   <Card key={spot.country} className="overflow-hidden group hover:shadow-lg transition-all duration-300">
                     <div className="relative aspect-video">
-                      <Image
-                        src={countryImages[spot.country as keyof typeof countryImages]}
-                        alt={`${spot.country} landscape`}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-110"
-                      />
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
+                        style={{
+                          backgroundImage: `url(${spot.country === 'Cambodia'
+                            ? '/__test/test.jpg'
+                            : countryImages[spot.country as keyof typeof countryImages]})`
+                        }}
+                      ></div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent">
                         <div className="absolute bottom-4 left-4">
                           <div className="flex items-center gap-2 text-white">

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { ProjectsGrid } from "./projects-grid"
-import { Rocket, Code2 } from "lucide-react"
+import { Rocket, Code2, FolderKanban, Cpu, Clock } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import { PageTransition, PageLoadingAnimation, ScrollProgress, ScrollToTop } from "@/components/ui/page-transition"
@@ -55,34 +55,32 @@ const DynamicBackground = () => {
     )
 }
 
-// 添加统计组件
+// 美化统计组件
 const ProjectStats = ({ projects }: { projects: Project[] }) => {
     const totalProjects = projects.length
     const uniqueTags = [...new Set(projects.flatMap(p => p.tags))].length
-    const recentUpdates = projects.filter(p => p.isRecentUpdate ?? false).length
+    const recentUpdates = projects.filter(p => p.isRecentUpdate === true).length
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div className="flex gap-6 mt-2">
             {[
-                { label: "Total Projects", value: totalProjects, icon: <Code2 className="h-5 w-5" /> },
-                { label: "Technologies Used", value: uniqueTags, icon: <Rocket className="h-5 w-5" /> },
-                { label: "Recent Updates", value: recentUpdates, icon: <Code2 className="h-5 w-5" /> }
+                { label: "Projects", value: totalProjects, icon: <FolderKanban className="h-4 w-4" /> },
+                { label: "Technologies", value: uniqueTags, icon: <Cpu className="h-4 w-4" /> },
+                { label: "Updates", value: recentUpdates, icon: <Clock className="h-4 w-4" /> }
             ].map((stat, index) => (
                 <motion.div
                     key={stat.label}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-card/50 backdrop-blur-sm p-6 rounded-xl border border-primary/10 hover:border-primary/20 transition-colors"
+                    className="flex items-center gap-2"
                 >
-                    <div className="flex items-center gap-4">
-                        <div className="p-2 rounded-lg bg-primary/10">
-                            {stat.icon}
-                        </div>
-                        <div>
-                            <div className="text-2xl font-bold">{stat.value}</div>
-                            <div className="text-sm text-muted-foreground">{stat.label}</div>
-                        </div>
+                    <div className="p-1 rounded-md bg-primary/10">
+                        {stat.icon}
+                    </div>
+                    <div className="flex gap-1 items-baseline">
+                        <div className="text-lg font-bold text-primary">{stat.value}</div>
+                        <div className="text-xs text-muted-foreground">{stat.label}</div>
                     </div>
                 </motion.div>
             ))}
@@ -135,7 +133,7 @@ export function ProjectsPageContent({ projects }: ProjectsPageContentProps) {
         ...project,
         slug: project.slug || `project-${project.id}`,  // 提供默认值
         publishedAt: project.publishedAt || new Date().toISOString(),  // 提供默认值
-        isRecentUpdate: project.isRecentUpdate || false  // 提供默认值
+        isRecentUpdate: Boolean(project.isRecentUpdate)  // 确保是布尔值
     }))
 
     const [selectedTag, setSelectedTag] = useState<string | null>(null)
@@ -205,40 +203,36 @@ export function ProjectsPageContent({ projects }: ProjectsPageContentProps) {
                         </div>
                     </motion.section>
 
-                    {/* 项目统计 */}
-                    <motion.section
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="py-24"
-                    >
-                        <ProjectStats projects={projects} />
-                    </motion.section>
-
                     {/* 标签过滤器和项目网格 */}
                     <motion.section
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="py-24 bg-accent/20 relative"
+                        className="py-24 relative"
                     >
-                        {/* 背景装饰 */}
-                        <div className="absolute inset-0 -z-10">
-                            <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]" />
-                            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-                        </div>
-
                         <div className="container mx-auto px-4">
-                            <div className="flex flex-col items-center text-center mb-16">
-                                <div className="p-3 rounded-xl bg-primary/10 mb-4">
-                                    <Code2 className="h-10 w-10 text-primary" />
-                                </div>
-                                <h2 className="text-4xl font-bold mb-4">Project Gallery</h2>
-                                <p className="text-muted-foreground max-w-2xl">
-                                    Filter through my projects by technology or browse them all
-                                </p>
+                            <div className="flex flex-col gap-3 mb-10">
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.6 }}
+                                    className="space-y-2"
+                                >
+                                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                                        <div>
+                                            <div className="flex items-center gap-2">
+                                                <div className="h-px w-8 bg-primary/60"></div>
+                                                <h2 className="text-3xl font-bold gradient-text">Project Gallery</h2>
+                                            </div>
+                                            <p className="text-muted-foreground max-w-2xl mt-2">
+                                                Filter through my projects by technology or browse them all
+                                            </p>
+                                        </div>
+                                        <ProjectStats projects={validatedProjects} />
+                                    </div>
+                                </motion.div>
                             </div>
 
                             <motion.div
@@ -273,7 +267,7 @@ export function ProjectsPageContent({ projects }: ProjectsPageContentProps) {
                         className="text-center py-24"
                     >
                         <motion.div
-                            className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-accent/30 backdrop-blur-sm relative overflow-hidden group"
+                            className="inline-flex items-center gap-4 px-6 py-3 relative overflow-hidden group"
                             whileHover={{ scale: 1.05 }}
                             transition={{ type: "spring", stiffness: 400, damping: 10 }}
                         >

@@ -26,48 +26,54 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --background: 0 0% 98%;
+    --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    /* 纯黑色调整为略微柔和的黑色 */
     --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
+    --secondary: 0 0% 96%;
+    /* 柔和的浅灰色背景 */
+    --secondary-foreground: 0 0% 20%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 25%;
+    /* 深灰色强调 */
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 80% 50%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
+    --ring: 0 0% 20%;
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --background: 0 0% 5%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 0 0% 90%;
+    /* 暗模式下的近白色 */
+    --primary-foreground: 0 0% 5%;
+    --secondary: 0 0% 15%;
+    /* 暗模式下的深灰色背景 */
+    --secondary-foreground: 0 0% 90%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 0 0% 80%;
+    /* 浅灰色强调 */
+    --accent-foreground: 0 0% 5%;
+    --destructive: 0 70% 45%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 80%;
   }
 }
 
@@ -236,9 +242,9 @@ html {
 /* 渐变背景动画 */
 .gradient-bg {
   background: linear-gradient(-45deg,
-      hsl(var(--primary) / 0.05),
-      hsl(var(--secondary) / 0.05),
-      hsl(var(--accent) / 0.05));
+      hsl(var(--primary) / 0.1),
+      hsl(var(--secondary) / 0.1),
+      hsl(var(--accent) / 0.1));
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
@@ -270,9 +276,11 @@ html {
 /* 卡片悬浮效果增强 */
 .card-hover-enhanced {
   @apply transition-all duration-300;
-  @apply hover:shadow-lg hover:shadow-primary/5 dark:hover:shadow-primary/10;
+  @apply hover:shadow-lg dark:hover:shadow-xl;
+  @apply hover:shadow-primary/10 dark:hover:shadow-primary/20;
   @apply hover:-translate-y-1;
-  @apply hover:bg-accent/50;
+  @apply hover:bg-primary/5 dark:hover:bg-primary/10;
+  @apply border border-border/50 hover:border-primary/30;
 }
 
 /* 动态边框效果 */
@@ -354,7 +362,7 @@ html {
 
 /* 悬浮导航栏效果 */
 .navbar-float {
-  @apply fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-7xl;
+  @apply fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-3xl;
   @apply rounded-xl shadow-lg shadow-primary/5;
   @apply bg-background/70 backdrop-blur-md border border-primary/10;
   @apply transition-all duration-300;
@@ -562,4 +570,254 @@ html {
   100% {
     transform: translateY(-24px);
   }
+}
+
+/* 光晕效果按钮 */
+.glow-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.glow-button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-button:hover::after {
+  opacity: 1;
+}
+
+/* 渐变边框效果 */
+.gradient-border {
+  position: relative;
+  z-index: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  left: -50%;
+  top: -50%;
+  width: 200%;
+  height: 200%;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-image: conic-gradient(transparent,
+      hsl(var(--primary)),
+      transparent 30%);
+  animation: rotate 4s linear infinite;
+}
+
+.gradient-border::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 2px;
+  top: 2px;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  background: hsl(var(--card));
+  border-radius: calc(var(--radius) - 2px);
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+/* 玻璃态效果增强 */
+.glass-effect-enhanced {
+  @apply bg-background/70 dark:bg-background/60;
+  @apply backdrop-blur-lg;
+  @apply border border-white/20 dark:border-white/10;
+  @apply shadow-lg shadow-primary/5 dark:shadow-primary/10;
+}
+
+/* 微光效果 */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(to right,
+      transparent 0%,
+      hsl(var(--primary) / 0.1) 50%,
+      transparent 100%);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+/* 渐变按钮效果 */
+.gradient-button {
+  background: linear-gradient(to right,
+      hsl(var(--primary)),
+      hsl(var(--accent)));
+  color: hsl(var(--primary-foreground));
+  transition: all 0.3s ease;
+  background-size: 200% auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gradient-button:hover {
+  background-position: right center;
+  box-shadow: 0 8px 25px hsl(var(--primary) / 0.3);
+  transform: translateY(-2px);
+}
+
+/* 霓虹效果 */
+.neon-text {
+  color: hsl(var(--primary));
+  text-shadow:
+    0 0 5px hsl(var(--primary) / 0.2),
+    0 0 10px hsl(var(--primary) / 0.2),
+    0 0 20px hsl(var(--primary) / 0.1);
+}
+
+.neon-border {
+  position: relative;
+  border: 1px solid hsl(var(--primary) / 0.3);
+  box-shadow:
+    0 0 5px hsl(var(--primary) / 0.2),
+    inset 0 0 5px hsl(var(--primary) / 0.2);
+}
+
+/* 高级卡片效果 */
+.premium-card {
+  position: relative;
+  background: linear-gradient(135deg,
+      hsl(var(--card)) 0%,
+      hsl(var(--background)) 100%);
+  border: 1px solid hsl(var(--border));
+  box-shadow:
+    0 10px 25px -5px hsl(var(--primary) / 0.05),
+    0 8px 10px -6px hsl(var(--primary) / 0.1);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.premium-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg,
+      hsl(var(--primary) / 0.3) 0%,
+      hsl(var(--accent) / 0.3) 100%);
+  filter: blur(20px);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.premium-card:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 20px 35px -10px hsl(var(--primary) / 0.1),
+    0 10px 15px -5px hsl(var(--primary) / 0.15);
+}
+
+.premium-card:hover::before {
+  opacity: 0.7;
+}
+
+/* 微妙的背景动画效果 */
+.subtle-background {
+  position: relative;
+  overflow: hidden;
+}
+
+.subtle-background::before {
+  content: '';
+  position: absolute;
+  inset: -100px;
+  background: radial-gradient(circle at 30% 30%,
+      hsl(var(--primary) / 0.1) 0%,
+      transparent 50%);
+  opacity: 0.5;
+  animation: pulse 10s infinite alternate ease-in-out;
+}
+
+.subtle-background::after {
+  content: '';
+  position: absolute;
+  inset: -100px;
+  background: radial-gradient(circle at 70% 70%,
+      hsl(var(--accent) / 0.1) 0%,
+      transparent 50%);
+  opacity: 0.5;
+  animation: pulse 15s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}
+
+/* 改进的卡片悬停效果 */
+.card-hover-premium {
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+}
+
+.card-hover-premium::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg,
+      hsl(var(--primary) / 0.1) 0%,
+      hsl(var(--accent) / 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card-hover-premium:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow:
+    0 15px 30px -5px hsl(var(--primary) / 0.15),
+    0 5px 15px hsl(var(--primary) / 0.1);
+}
+
+.card-hover-premium:hover::after {
+  opacity: 1;
 }

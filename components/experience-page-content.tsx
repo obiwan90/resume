@@ -331,7 +331,7 @@ export function ExperiencePageContent({ experiences }: ExperiencePageContentProp
                         className="text-center py-24"
                     >
                         <motion.div
-                            className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-accent/30 backdrop-blur-sm relative overflow-hidden group"
+                            className="inline-flex items-center gap-4 px-6 py-3 relative overflow-hidden group"
                             whileHover={{ scale: 1.05 }}
                             transition={{ type: "spring", stiffness: 400, damping: 10 }}
                         >

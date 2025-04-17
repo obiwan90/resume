@@ -90,7 +90,7 @@ export function Navbar() {
                 </Link>
 
                 {/* 导航链接 - 桌面端显示完整导航，移动端只显示图标 */}
-                <nav className="flex items-center">
+                <nav className="flex items-center gap-x-2">
                     {navItems.map((item) => (
                         <Link
                             key={item.href}

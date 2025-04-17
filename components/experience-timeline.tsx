@@ -197,7 +197,7 @@ const ProjectCard = ({ project }: { project: Experience['projects'][0] }) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className={cn(
-                "group bg-accent/50 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300",
+                "group rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300",
                 "border border-primary/10 hover:border-primary/20"
             )}
             whileHover={{ scale: 1.02 }}
@@ -403,7 +403,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
                                                         },
                                                         opacity: { duration: 0.2 }
                                                     }}
-                                                    className="mt-8 pt-8 border-t space-y-8"
+                                                    className="mt-0 p-8 border-t border-primary/10 bg-card rounded-b-xl space-y-8"
                                                 >
                                                     <div className={cn(
                                                         "grid gap-8",
@@ -417,7 +417,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
                                                     </div>
 
                                                     <motion.div
-                                                        className="space-y-4 p-6 bg-accent/30 rounded-xl border border-primary/10"
+                                                        className="space-y-4 p-6 rounded-xl border border-primary/10"
                                                         initial={{ opacity: 0, y: 10 }}
                                                         animate={{ opacity: 1, y: 0 }}
                                                         transition={{ delay: 0.2 }}
@@ -576,7 +576,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
                                                         },
                                                         opacity: { duration: 0.2 }
                                                     }}
-                                                    className="mt-8 pt-8 border-t space-y-8"
+                                                    className="mt-0 p-8 border-t border-primary/10 bg-card rounded-b-xl space-y-8"
                                                 >
                                                     <div className={cn(
                                                         "grid gap-8",
@@ -590,7 +590,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
                                                     </div>
 
                                                     <motion.div
-                                                        className="space-y-4 p-6 bg-accent/30 rounded-xl border border-primary/10"
+                                                        className="space-y-4 p-6 rounded-xl border border-primary/10"
                                                         initial={{ opacity: 0, y: 10 }}
                                                         animate={{ opacity: 1, y: 0 }}
                                                         transition={{ delay: 0.2 }}
@@ -736,7 +736,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
                                                 },
                                                 opacity: { duration: 0.2 }
                                             }}
-                                            className="mt-8 pt-8 border-t space-y-8"
+                                            className="mt-0 p-8 border-t border-primary/10 bg-card rounded-b-xl space-y-8"
                                         >
                                             <div className={cn(
                                                 "grid gap-8",
@@ -750,7 +750,7 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
                                             </div>
 
                                             <motion.div
-                                                className="space-y-4 p-6 bg-accent/30 rounded-xl border border-primary/10"
+                                                className="space-y-4 p-6 rounded-xl border border-primary/10"
                                                 initial={{ opacity: 0, y: 10 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 transition={{ delay: 0.2 }}
